@@ -32,69 +32,132 @@ jobs:
           if [ -f index.js ]; then node index.js; fi
           if [ -f tracker.js ]; then node tracker.js; fi
 
-      # Visual Facelift: Injects custom premium styling and beautiful action buttons
-      - name: Inject Premium Theme and Footer
+      # Ultimate Upgrade: Injects Nav, Badges, Automated Buttons, SEO, and Monetization
+      - name: Inject Pro Financial Dashboard Template
         run: |
           NEWSLETTER="https://your-future-newsletter.com"
           DONATION="https://your-future-donation-page.com"
+          CURRENT_DATE=$(date "+%B %d, %Y")
 
-          # Premium CSS Styling to completely change fonts, colors, and layout
+          # 1. Premium CSS Framework (Handles Layout, Tables, and auto-converts raw links to Buttons)
           STYLE_BLOCK="<style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #2d3748; background-color: #f7fafc; }
-            h1, h2, h3 { color: #1a365d; font-weight: 700; }
-            table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-            th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
-            th { background-color: #2b6cb0; color: white; font-weight: 600; }
+            :root { --primary: #1e3a8a; --primary-hover: #172554; --success: #10b981; --success-hover: #059669; --bg: #f8fafc; --text: #334155; }
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; max-width: 900px; margin: 0 auto; padding: 20px; color: var(--text); background-color: var(--bg); }
+            
+            /* Header Navigation Bar & Timestamp Styles */
+            .navbar { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 2px solid #e2e8f0; margin-bottom: 30px; }
+            .nav-logo { font-size: 1.3em; font-weight: 800; color: var(--primary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+            .nav-meta { font-size: 0.85em; color: #64748b; font-weight: 500; }
+            
+            /* Status Badge Styles */
+            .status-banner { display: inline-flex; align-items: center; gap: 6px; background: #d1fae5; color: #065f46; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 700; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }
+            
+            /* Headings & Content */
+            h1, h2, h3 { color: var(--primary); font-weight: 700; }
+            
+            /* Table UI Upgrades */
+            table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 25px 0; background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+            th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #edf2f7; }
+            th { background-color: var(--primary); color: white; font-weight: 600; font-size: 0.95em; text-transform: uppercase; letter-spacing: 0.05em; }
+            tr:last-child td { border-bottom: none; }
             tr:hover { background-color: #f1f5f9; }
-            .monetize-container { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
-            .monetize-card { flex: 1; min-width: 280px; padding: 24px; border-radius: 12px; background: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; text-align: center; }
-            .monetize-card h3 { margin-top: 0; color: #2b6cb0; }
-            .btn { display: inline-block; background: #2b6cb0; color: white !important; padding: 12px 24px; text-decoration: none !important; border-radius: 8px; font-weight: bold; margin-top: 15px; transition: background 0.2s; }
-            .btn:hover { background: #1a365d; }
-            .btn-alt { background: #319795; }
-            .btn-alt:hover { background: #234e52; }
-            .disclaimer { font-size: 0.85em; color: #718096; margin-top: 40px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; font-style: italic; }
+            
+            /* AUTO-BUTTON CONVERSION: Turns any raw data link into a premium Action Button */
+            td a, p > a { display: inline-block; background-color: var(--success); color: white !important; padding: 8px 16px; border-radius: 6px; text-decoration: none !important; font-weight: 600; font-size: 0.9em; box-shadow: 0 2px 4px rgba(16,185,129,0.2); transition: background 0.2s, transform 0.1s; }
+            td a:hover, p > a:hover { background-color: var(--success-hover); transform: translateY(-1px); }
+            
+            /* Monetization Footer Cards */
+            .monetize-container { display: flex; gap: 20px; margin-top: 50px; flex-wrap: wrap; }
+            .monetize-card { flex: 1; min-width: 280px; padding: 28px; border-radius: 16px; background: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; text-align: center; }
+            .monetize-card h3 { margin-top: 0; color: var(--primary); }
+            .monetize-card p { font-size: 0.95em; color: #64748b; }
+            .btn-footer { display: inline-block; width: 80%; background: var(--primary); color: white !important; padding: 12px 20px; text-decoration: none !important; border-radius: 8px; font-weight: bold; margin-top: 15px; box-shadow: 0 4px 6px rgba(30,58,138,0.15); }
+            .btn-footer:hover { background: var(--primary-hover); }
+            .btn-alt { background: #0d9488; box-shadow: 0 4px 6px rgba(13,148,136,0.15); }
+            .btn-alt:hover { background: #115e59; }
+            
+            /* Disclaimer */
+            .disclaimer { font-size: 0.8em; color: #94a3b8; margin-top: 50px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 25px; font-style: italic; line-height: 1.5; }
           </style>"
 
-          # Catchy HTML content block with structural layout cards
-          HTML_FOOTER="$STYLE_BLOCK
-          <div class='monetize-container'>
-            <div class='monetize-card'>
-              <h3>📬 Stay Updated On Payouts</h3>
-              <p>Never miss a class action deadline. Join our free newsletter to get high-value updates sent straight to your inbox.</p>
-              <a href='$NEWSLETTER' class='btn'>Join Free Newsletter</a>
-            </div>
-            <div class='monetize-card'>
-              <h3>☕ Support the Tracker</h3>
-              <p>Did this automated tracking tool help you claim some money? Consider buying me a coffee to keep it online!</p>
-              <a href='$DONATION' class='btn btn-alt'>Buy Me a Coffee</a>
-            </div>
-          </div>
-          <p class='disclaimer'>Disclaimer: This site features automated tracking data for informational purposes only. We are not a law firm. Always verify your eligibility on the official settlement administrator website.</p>"
-
-          # Automatically applies the facelift to HTML files anywhere in the project
+          # Automatically processes HTML files anywhere in your repository
           find . -type f -name "*.html" -not -path "*/.*" | while read -r file; do
             if ! grep -q "Support the Tracker" "$file"; then
-              echo "$HTML_FOOTER" >> "$file"
-              echo "Successfully styled: $file"
+              # Read original content generated by your script
+              ORIGINAL_CONTENT=$(cat "$file")
+              
+              # Extract clean title if possible for SEO meta tags
+              PAGE_TITLE="Live Class Action Settlement Tracker & Payout Claims"
+              
+              # Re-compile the page dynamically with all 5 enhancements built-in
+              cat <<EOF > "$file"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${PAGE_TITLE}</title>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Automated daily tracking dashboard for open corporate class action settlements, claim form links, and filing deadlines.">
+    <meta name="robots" content="index, follow">
+    ${STYLE_BLOCK}
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">⚖️ Settlement Tracker Bot</a>
+        <div class="nav-meta">⚡ Updated: ${CURRENT_DATE}</div>
+    </nav>
+
+    <!-- Urgent/Active Status Badge -->
+    <div class="status-banner">
+        🟢 Open Claims Monitoring Active
+    </div>
+
+    <!-- Main Content Area (Your Script's Output) -->
+    <main>
+        ${ORIGINAL_CONTENT}
+    </main>
+
+    <!-- Monetization Footer Block -->
+    <div class='monetize-container'>
+        <div class='monetize-card'>
+            <h3>📬 Stay Updated On Payouts</h3>
+            <p>Never miss a high-value class action deadline. Join our free newsletter to get payout alerts sent straight to your inbox.</p>
+            <a href='${NEWSLETTER}' class='btn-footer'>Join Free Newsletter</a>
+        </div>
+        <div class='monetize-card'>
+            <h3>☕ Support the Tracker</h3>
+            <p>Did this automated tracking tool help you claim some settlement money? Consider supporting the server costs!</p>
+            <a href='${DONATION}' class='btn-footer btn-alt'>Buy Me a Coffee</a>
+        </div>
+    </div>
+
+    <p class='disclaimer'>Disclaimer: This site features automated tracking data compiled for informational purposes only. We are not a law firm, legal counsel, or a settlement administrator. Always verify your claim eligibility on the official administrator websites before filing.</p>
+
+</body>
+</html>
+EOF
+              echo "Successfully applied premium dashboard layout to: $file"
             fi
           done
           
-          # Also styles Markdown files if you have them
+          # Markdown fallback backup styling
           find . -type f -name "*.md" -not -path "*/.*" | while read -r file; do
             if ! grep -q "Support the Tracker" "$file"; then
-              echo -e "\n\n---\n\n### 📬 [Join Free Newsletter]($NEWSLETTER) | ☕ [Buy Me a Coffee]($DONATION)" >> "$file"
+              echo -e "\n\n---\n\n### 📬 [Join Free Newsletter]($NEWSLETTER) | ☕ [Buy Me a Coffee]($DONATION)\n\n*Database last updated automatically: ${CURRENT_DATE}*" >> "$file"
             fi
           done
 
-      # Saves and publishes the beautifully styled update
+      # Saves and publishes the upgraded engine
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           if ! git diff-index --quiet HEAD; then
-            git commit -m "chore: apply premium catchy theme layout [skip ci]"
+            git commit -m "chore: deploy premium automated financial dashboard engine [skip ci]"
             git push
           else
             echo "No changes detected today."
