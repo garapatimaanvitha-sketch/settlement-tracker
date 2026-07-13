@@ -15,18 +15,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # Sets up Python automatically
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # Installs any Python requirements if they exist
       - name: Install Python Dependencies
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # Runs your tracking script automatically (supports Python and Node)
+      # Runs your tracking script automatically
       - name: Run Tracker Script
         run: |
           if [ -f main.py ]; then python main.py; fi
@@ -34,39 +32,69 @@ jobs:
           if [ -f index.js ]; then node index.js; fi
           if [ -f tracker.js ]; then node tracker.js; fi
 
-      # Smart Search: Automatically finds your blog files in ANY folder and adds monetization
-      - name: Inject Monetization Footer
+      # Visual Facelift: Injects custom premium styling and beautiful action buttons
+      - name: Inject Premium Theme and Footer
         run: |
           NEWSLETTER="https://your-future-newsletter.com"
           DONATION="https://your-future-donation-page.com"
 
-          MD_FOOTER="\n\n---\n\n### 📬 Stay Updated\nJoin our free [Settlement Alert Newsletter]($NEWSLETTER) to get high-value updates sent straight to your inbox.\n\n### ☕ Support the Tracker\nConsider [buying me a coffee]($DONATION) to keep this tool running 100% free!"
-          HTML_FOOTER="<hr><h3>📬 Stay Updated</h3><p>Join our free <a href='$NEWSLETTER'>Settlement Alert Newsletter</a> to get updates sent straight to your inbox.</p><h3>☕ Support the Tracker</h3><p>Consider <a href='$DONATION'>buying me a coffee</a> to keep this tool running free!</p>"
+          # Premium CSS Styling to completely change fonts, colors, and layout
+          STYLE_BLOCK="<style>
+            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #2d3748; background-color: #f7fafc; }
+            h1, h2, h3 { color: #1a365d; font-weight: 700; }
+            table { width: 100%; border-collapse: collapse; margin: 20px 0; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+            th, td { padding: 12px 15px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+            th { background-color: #2b6cb0; color: white; font-weight: 600; }
+            tr:hover { background-color: #f1f5f9; }
+            .monetize-container { display: flex; gap: 20px; margin-top: 40px; flex-wrap: wrap; }
+            .monetize-card { flex: 1; min-width: 280px; padding: 24px; border-radius: 12px; background: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; text-align: center; }
+            .monetize-card h3 { margin-top: 0; color: #2b6cb0; }
+            .btn { display: inline-block; background: #2b6cb0; color: white !important; padding: 12px 24px; text-decoration: none !important; border-radius: 8px; font-weight: bold; margin-top: 15px; transition: background 0.2s; }
+            .btn:hover { background: #1a365d; }
+            .btn-alt { background: #319795; }
+            .btn-alt:hover { background: #234e52; }
+            .disclaimer { font-size: 0.85em; color: #718096; margin-top: 40px; text-align: center; border-top: 1px solid #e2e8f0; padding-top: 20px; font-style: italic; }
+          </style>"
 
-          # Automatically finds and updates all Markdown (.md) files anywhere in the project
-          find . -type f -name "*.md" -not -path "*/.*" | while read -r file; do
-            if ! grep -q "Support the Tracker" "$file"; then
-              echo -e "$MD_FOOTER" >> "$file"
-              echo "Successfully added footer to: $file"
-            fi
-          done
+          # Catchy HTML content block with structural layout cards
+          HTML_FOOTER="$STYLE_BLOCK
+          <div class='monetize-container'>
+            <div class='monetize-card'>
+              <h3>📬 Stay Updated On Payouts</h3>
+              <p>Never miss a class action deadline. Join our free newsletter to get high-value updates sent straight to your inbox.</p>
+              <a href='$NEWSLETTER' class='btn'>Join Free Newsletter</a>
+            </div>
+            <div class='monetize-card'>
+              <h3>☕ Support the Tracker</h3>
+              <p>Did this automated tracking tool help you claim some money? Consider buying me a coffee to keep it online!</p>
+              <a href='$DONATION' class='btn btn-alt'>Buy Me a Coffee</a>
+            </div>
+          </div>
+          <p class='disclaimer'>Disclaimer: This site features automated tracking data for informational purposes only. We are not a law firm. Always verify your eligibility on the official settlement administrator website.</p>"
 
-          # Automatically finds and updates all HTML (.html) files anywhere in the project
+          # Automatically applies the facelift to HTML files anywhere in the project
           find . -type f -name "*.html" -not -path "*/.*" | while read -r file; do
             if ! grep -q "Support the Tracker" "$file"; then
               echo "$HTML_FOOTER" >> "$file"
-              echo "Successfully added footer to: $file"
+              echo "Successfully styled: $file"
+            fi
+          done
+          
+          # Also styles Markdown files if you have them
+          find . -type f -name "*.md" -not -path "*/.*" | while read -r file; do
+            if ! grep -q "Support the Tracker" "$file"; then
+              echo -e "\n\n---\n\n### 📬 [Join Free Newsletter]($NEWSLETTER) | ☕ [Buy Me a Coffee]($DONATION)" >> "$file"
             fi
           done
 
-      # Saves and publishes the updates to your blog
+      # Saves and publishes the beautifully styled update
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           if ! git diff-index --quiet HEAD; then
-            git commit -m "chore: smart auto-update daily settlement data [skip ci]"
+            git commit -m "chore: apply premium catchy theme layout [skip ci]"
             git push
           else
             echo "No changes detected today."
