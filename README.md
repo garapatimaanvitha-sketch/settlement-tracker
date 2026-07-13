@@ -74,3 +74,12 @@ you're ready to check step "What still needs you," below.
 | Writer model (Gemini API free tier) | $0 (rate-limited) |
 | Domain | $0 (using github.io subdomain) |
 | **Total** | **$0** |
+
+
+---
+
+### 📬 Stay Updated
+Join our free [Settlement Alert Newsletter](https://your-future-newsletter.com) to get high-value updates sent straight to your inbox.
+
+### ☕ Support the Tracker
+Consider [buying me a coffee](https://your-future-donation-page.com) to keep this tool running 100% free!
