@@ -15,16 +15,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      # Sets up Python automatically
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
+      # Installs any Python requirements if they exist
       - name: Install Python Dependencies
         run: |
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      # Runs your tracking script if it exists
+      # Runs your tracking script automatically (supports Python and Node)
       - name: Run Tracker Script
         run: |
           if [ -f main.py ]; then python main.py; fi
@@ -32,27 +34,28 @@ jobs:
           if [ -f index.js ]; then node index.js; fi
           if [ -f tracker.js ]; then node tracker.js; fi
 
-      # Adds the monetization text automatically to the bottom of your pages
+      # Smart Search: Automatically finds your blog files in ANY folder and adds monetization
       - name: Inject Monetization Footer
         run: |
-          # These are temporary placeholder links. You can change them easily later!
           NEWSLETTER="https://your-future-newsletter.com"
           DONATION="https://your-future-donation-page.com"
 
           MD_FOOTER="\n\n---\n\n### 📬 Stay Updated\nJoin our free [Settlement Alert Newsletter]($NEWSLETTER) to get high-value updates sent straight to your inbox.\n\n### ☕ Support the Tracker\nConsider [buying me a coffee]($DONATION) to keep this tool running 100% free!"
           HTML_FOOTER="<hr><h3>📬 Stay Updated</h3><p>Join our free <a href='$NEWSLETTER'>Settlement Alert Newsletter</a> to get updates sent straight to your inbox.</p><h3>☕ Support the Tracker</h3><p>Consider <a href='$DONATION'>buying me a coffee</a> to keep this tool running free!</p>"
 
-          # Automatically applies it to Markdown files if you have them
-          for file in *.md; do
-            if [ -f "$file" ] && ! grep -q "Support the Tracker" "$file"; then
+          # Automatically finds and updates all Markdown (.md) files anywhere in the project
+          find . -type f -name "*.md" -not -path "*/.*" | while read -r file; do
+            if ! grep -q "Support the Tracker" "$file"; then
               echo -e "$MD_FOOTER" >> "$file"
+              echo "Successfully added footer to: $file"
             fi
           done
 
-          # Automatically applies it to HTML files if you have them
-          for file in *.html; do
-            if [ -f "$file" ] && ! grep -q "Support the Tracker" "$file"; then
+          # Automatically finds and updates all HTML (.html) files anywhere in the project
+          find . -type f -name "*.html" -not -path "*/.*" | while read -r file; do
+            if ! grep -q "Support the Tracker" "$file"; then
               echo "$HTML_FOOTER" >> "$file"
+              echo "Successfully added footer to: $file"
             fi
           done
 
@@ -63,8 +66,8 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           if ! git diff-index --quiet HEAD; then
-            git commit -m "chore: auto-update daily settlement data with placeholder monetization [skip ci]"
+            git commit -m "chore: smart auto-update daily settlement data [skip ci]"
             git push
           else
-            echo "No new settlement data found today."
+            echo "No changes detected today."
           fi
