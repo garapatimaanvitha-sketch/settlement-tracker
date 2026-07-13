@@ -1,0 +1,145 @@
+/* ============================================================
+   THE SETTLEMENT DOCKET — design tokens
+   Motif: case file / official notice. Every visual choice ties
+   back to how real settlement paperwork actually looks and works.
+   ============================================================ */
+
+:root {
+  --paper: #F3EDE0;       /* aged manila paper */
+  --paper-2: #EAE1CC;     /* folder tab / card background */
+  --ink: #2B2823;         /* body text, near-black warm charcoal */
+  --brass: #9C7A3C;       /* foil-stamp accent, links, rules */
+  --verified: #2F5233;    /* verified-source stamp */
+  --alert: #A6321B;       /* scam-alert stamp */
+  --deadline: #7A4A14;    /* deadline stamp */
+  --meta: #6B6255;        /* case metadata, secondary text */
+  --line: #D8CBA8;        /* hairline dividers */
+  --shadow: rgba(43,40,35,0.14);
+
+  --font-display: 'Source Serif 4', Georgia, serif;
+  --font-stamp: 'Courier Prime', 'Courier New', monospace;
+  --font-body: 'Source Serif 4', Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--brass); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+.wrap { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+/* ---------- Header / masthead ---------- */
+header.masthead {
+  border-bottom: 3px double var(--ink);
+  padding: 36px 0 20px;
+}
+header.masthead .eyebrow {
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--meta);
+}
+header.masthead h1 {
+  font-size: clamp(32px, 5vw, 48px);
+  margin: 6px 0 4px;
+  letter-spacing: -0.01em;
+}
+header.masthead p.tagline {
+  font-family: var(--font-stamp);
+  font-size: 14px;
+  color: var(--meta);
+  margin: 0;
+}
+
+/* ---------- Case file cards ---------- */
+.case-file {
+  position: relative;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 24px 26px;
+  margin: 22px 0;
+  box-shadow: 0 1px 0 var(--shadow);
+}
+.case-file .case-number {
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  color: var(--meta);
+  letter-spacing: 0.04em;
+}
+.case-file h2 {
+  margin: 6px 0 10px;
+  font-size: 24px;
+}
+.case-file h2 a { color: var(--ink); text-decoration: none; }
+.case-file h2 a:hover { color: var(--brass); }
+.case-file .summary { margin: 0 0 14px; color: var(--ink); }
+
+/* Stamp badges — rotated ink-stamp look, tied to real status */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  transform: rotate(-2deg);
+}
+.stamp.verified { color: var(--verified); }
+.stamp.alert    { color: var(--alert); }
+.stamp.deadline { color: var(--deadline); }
+
+/* ---------- Post page ---------- */
+article.post {
+  padding: 28px 0 60px;
+}
+article.post h1 { font-size: clamp(28px, 4.5vw, 40px); margin-bottom: 6px; }
+article.post .meta-row {
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  color: var(--meta);
+  margin-bottom: 18px;
+}
+article.post .stamp { margin-right: 8px; }
+article.post .body p { margin: 0 0 16px; }
+article.post .verify-box {
+  border-left: 3px solid var(--brass);
+  background: var(--paper-2);
+  padding: 14px 18px;
+  font-family: var(--font-stamp);
+  font-size: 13px;
+  color: var(--meta);
+  margin: 28px 0;
+}
+article.post .verify-box strong { color: var(--ink); }
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 0 60px;
+  font-family: var(--font-stamp);
+  font-size: 12px;
+  color: var(--meta);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .case-file { padding: 18px 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
